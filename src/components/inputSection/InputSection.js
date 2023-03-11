@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './InputSection.css';
 
 function InputSection(props) {
-  const {poem, setInput} = props;
+  const {poem, setInput, getVecForWord} = props;
+  const [poemVectors, setPoemVectors] = useState([]);
+
+  useEffect(() => {
+    const v = [];
+    poem.split(" ").forEach(word => v.push(getVecForWord(word)))
+    setPoemVectors(v);
+  }, [poem])
+
   return (
     <div className="Main-container">
       <div className="Vertical-container">
@@ -18,6 +26,7 @@ function InputSection(props) {
           Save
         </button>
         <p>{poem}</p>
+        <p>{poemVectors}</p>
       </div>
     </div>
   );
