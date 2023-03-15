@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
+import drawTrajectory from '../../d3/drawTrajectory';
 import './InputSection.css';
 
 function InputSection(props) {
-  const {poem, setInput, getVecForWord} = props;
-  const [poemVectors, setPoemVectors] = useState([]);
+  const {poem, setInput, VectorHandler, poemVectors, setPoemVectors} = props;
 
-  useEffect(() => {
+  const setVectors = () => {
     const v = [];
-    poem.split(" ").forEach(word => v.push(getVecForWord(word)))
+    poem.toLowerCase()
+      .replace( /\n/g, " " )
+      .split(" ")
+      .filter(s => s.length > 0)
+      .forEach(word => {
+        const vec = VectorHandler.getVecForWord(word)
+        v.push(vec)
+      })
     setPoemVectors(v);
-  }, [poem])
+    drawTrajectory("Trajectory-svg", v);
+  }
 
   return (
     <div className="Main-container">
@@ -21,7 +29,7 @@ function InputSection(props) {
         ></textarea>
         <button 
           className='Save-button'
-          onClick={() => {}}
+          onClick={setVectors}
         >
           Save
         </button>

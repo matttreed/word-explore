@@ -2,36 +2,39 @@ import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
 import InputSection from './components/inputSection/InputSection';
-import { loadVectors } from './wordVectors/loadVectors';
+import WordVectors from './wordVectors/WordVectors';
+import Trajectory from './components/Trajectory/Trajectory';
 // import {word2vec} from "word2vec";
 
 function App() {
   const [input, setInput] = useState("");
-  const [vectors, setVectors] = useState(undefined);
+  const [VectorHandler, setVectorHandler] = useState(undefined);
+  const [poemVectors, setPoemVectors] = useState([]);
 
   useEffect(() => {
-    if (vectors === undefined) {
-      loadVectors().then(({size, dim, vectors}) => {
-        setVectors(vectors);
-      }).catch(error => {
-        console.log("Error loading vectors: " + error);
+    if (VectorHandler === undefined) {
+      const v = new WordVectors();
+      v.loadVectors().then(() => {
+        setVectorHandler(v);
       })
     }
-  }, [vectors])
-
-  const getVecForWord = word => {
-    return (vectors && vectors[word]) || [0,0];
-  }
+  }, [VectorHandler])
 
   return (
     <div className="App">
       <header className="App-header"></header>
       <div className="Main-container">
         <div className='Left-section'>
-          <InputSection setInput={setInput} poem={input} getVecForWord={getVecForWord}/>
+          <InputSection 
+            setInput={setInput} 
+            poem={input} 
+            VectorHandler={VectorHandler}
+            poemVectors={poemVectors}
+            setPoemVectors={setPoemVectors}
+          />
         </div>
         <div className='Right-section'>
-          <InputSection setInput={setInput} poem={input}/>
+          <Trajectory data={poemVectors}/>
         </div>
       </div>
     </div>
