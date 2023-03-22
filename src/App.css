@@ -14,44 +14,90 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 8vh;
+  background-color: var(--dark);
+  min-height: 50px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  position: fixed;
+  width: 100vw;
+}
+
+.Header-text {
+  fill: white;
+  font-family: "SG-Bold";
+  display: inline-block;
+  text-align: left;
+  font-size: 40px;
+  margin-left: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.Subheader-text {
+  display: inline-block;
+  font-family: "SG-Light";
+  text-align: left;
+  font-size: 20px;
 }
 
 .Main-container {
   display: flex;
   flex-direction: row;
-  min-height: 92vh;
+  padding-top: 30px;
 }
 
 .Left-section {
   display: flex;
   /* background-color: #61dafb; */
+  width: 50vw;
   flex: 1;
 }
 
 .Right-section {
   display: flex;
-  background-color: #61dafb;
+  /* background-color: #61dafb; */
+  width: 50vw;
   flex: 1;
-  border: black;
+  /* border: black; */
 }
 
-.App-link {
-  color: #61dafb;
+@font-face {
+  font-family: "SG-Bold";
+  src: local("SpaceGrotesk-Bold"),
+    url("./fonts/SpaceGrotesk-Bold.ttf") format("truetype");
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: "SG-Light";
+  src: local("SpaceGrotesk-Light"),
+    url("./fonts/SpaceGrotesk-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SG-Medium";
+  src: local("SpaceGrotesk-Medium"),
+    url("./fonts/SpaceGrotesk-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SG-Regular";
+  src: local("SpaceGrotesk-Regular"),
+    url("./fonts/SpaceGrotesk-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SG-SemiBold";
+  src: local("SpaceGrotesk-SemiBold"),
+    url("./fonts/SpaceGrotesk-SemiBold.ttf") format("truetype");
+}
+
+:root {
+  --dark: #645CBB;
+  --medium: #A084DC;
+  --light: #BFACE2;
+  --verylight: #EBC7E6;
 }

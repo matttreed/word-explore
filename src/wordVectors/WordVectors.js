@@ -5,6 +5,24 @@ class WordVectors {
         this.size = 0
         this.dim = 2
         this.vectors = {}
+        this.words = []
+    }
+
+    getWordForVec = vec => {
+        let closestWord = ""
+        let closestDistance = Infinity
+        this.words.forEach((word) =>{
+            const wordVec = this.vectors[word]
+            const dist = ((wordVec[0] - vec[0]) ** 2 + (wordVec[1] - vec[1]) ** 2) ** 0.5;
+            if (dist < closestDistance) {
+                closestDistance = dist
+                closestWord = word
+            }
+        })
+        return {
+            word: closestWord,
+            vec: this.getVecForWord(closestWord)
+        }
     }
 
     getVecForWord = word => {
@@ -28,6 +46,7 @@ class WordVectors {
                 for (let i = 1; i < lines.length; i++) {
                     const [word, x, y] = lines[i].split(" ")
                     vectors[word] = [Number(x), Number(y)]
+                    this.words.push(word)
                 }
                 const [size, dim] = lines[0].split(" ")
                 this.size = Number(size);
