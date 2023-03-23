@@ -1,7 +1,7 @@
 .Text-input {
     resize: none;
-    width: 40vw;
-    height: 300px;
+    width: 35vw;
+    height: 20vw;
     font-family: "SG-Regular";
     padding: 10px;
     border-radius: 10px;
@@ -17,15 +17,15 @@
 
 .Main-container {
     display:flex;
-    width: "100%";
+    width: 40vw;
 }
 
-.Save-button {
+/* .Save-button {
     display: flex;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin-left: 15vw;
-    margin-right: 15vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
     margin-top: 20px;
     border-radius: 10px;
     width: 20vw;
@@ -39,13 +39,31 @@
 
 .Save-button:hover {
     cursor: pointer;
-}
+} */
 
 p {
     font-family: "SG-Light";
     text-align: left;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.Distance-button {
+    background-color: white;
+    font-family: "SG-Medium";
+    margin-left: 30px;
+    margin-right: 30px;
+    font-size: 15px;
+    border-radius: 5px;
+    border-color: var(--medium);
+}
+
+.Distance-button:hover {
+    cursor: pointer;
+}
+
+.Distance-container {
+
 }
 
 /* .Trend-button {
@@ -75,11 +93,13 @@ p {
     font-size: 20px;
     display: inline;
     margin-right: 5px;
+    margin-top: 0px;
 }
 
 .Trend-word-button {
     display: inline;
-    width: 200px;
+    position: relative;
+    top: 2px;
     height: 45px;
     padding: 10px;
     border-radius: 10px;
@@ -89,8 +109,40 @@ p {
     font-size: 20px;
     border-width: 0;
     margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.Trend-word-button:hover {
+    background-color: var(--medium);
+    cursor: pointer;
+}
+
+.Cursor-button {
+    width: 30px;
+    height: 30px;
+    /* margin: 20px; */
+    position:relative;
+    top: 8px;
+    left: -5px;
+}
+
+.Cursor-button:hover {
+    cursor: pointer;
 }
 
 .Trend-container {
     display:block;
+    width: 50vw - 40px;
+    text-align: left;
+    padding: 20px;
+    /* align-items:start;
+    justify-content:start;
+    align-content:start;
+    justify-items:start; */
+}
+
+.Comparisons-container {
+    /* background-color: lightgray; */
+    padding: 5px;
+    border-radius: 10px;
 }

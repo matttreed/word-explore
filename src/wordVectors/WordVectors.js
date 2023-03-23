@@ -26,7 +26,7 @@ class WordVectors {
     }
 
     getVecForWord = word => {
-        return this.vectors[word] || [0,0];
+        return this.vectors[word] || undefined;
     }
 
     loadFile() {

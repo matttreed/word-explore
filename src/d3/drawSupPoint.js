@@ -1,13 +1,9 @@
 import * as d3 from "d3";
 
-const drawSupPoints = (className, supPoints) => {
+const drawSupPoints = (supPoints, toolTipCallback) => {
 
-    console.log(supPoints)
-
-    return;
-
-    const svg = d3.select("." + className);
-    const supPointsGroup = svg.select("Sup-points")
+    const svg = d3.select(".Trajectory-svg");
+    const supPointsGroup = svg.select(".Sup-points")
     let width = parseInt(svg.style("width"), 10)
     let height = parseInt(svg.style("height"), 10)
 
@@ -21,18 +17,24 @@ const drawSupPoints = (className, supPoints) => {
         .domain([-30,30])
         .range([0, width])
 
-    supPointsGroup.selectAll("circle")
-        .data(supPoints)
-        .join("circle")
-        .attr("cx", d => xScale(d.vec[0]))
-        .attr("cy", d => yScale(d.vec[1]))
-        .attr("r", 5)
-        .attr("fill", "#ff0000")
+    supPointsGroup.selectAll("rect")
+        .data(supPoints.map((d,i) => {
+            return {...d, index: i}
+        }))
+        .join("rect")
+        .attr("x", d => xScale(d.vector[0]) - 5)
+        .attr("y", d => yScale(d.vector[1]) - 5)
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("fill", (d,i) => d3.schemeSet1[i % 9])
         .attr("opacity", 1)
         .on("mouseover", function (event, d) {
+            toolTipCallback(d.word);
             svg.select(".Tooltip-text")
-                .attr("transform", `translate(${xScale(d.x) + 5}, ${yScale(d.y) - 5})`) 
-                .style("display", "block");
+                .attr("transform", `translate(${xScale(d.vector[0]) + 10}, ${yScale(d.vector[1]) - 10})`) 
+                .style("display", "block")
+                .style("fill", d3.schemeSet1[d.index % 9])
+                .text(d.word);
             d3.select(this)
                 .attr("stroke", "#333333")
                 .attr("stroke-width", 2);

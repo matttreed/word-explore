@@ -1,8 +1,8 @@
 import * as d3 from "d3";
 
-const drawSVG = (className, data, toolTipCallback) => {
+const drawSVG = (data, toolTipCallback) => {
 
-    const svg = d3.select("." + className);
+    const svg = d3.select(".Trajectory-svg");
     let width = parseInt(svg.style("width"), 10)
     let height = parseInt(svg.style("height"), 10)
 
@@ -47,29 +47,44 @@ const drawSVG = (className, data, toolTipCallback) => {
         .transition(transitionPath)
         .attr("stroke-dashoffset", 0);
 
+    const hoverColor = "#A084DC"
+    const normalColor = "#645CBB"
+
     const points = svg
         .select(".Points")
         .selectAll("circle")
-        .data(data)
+        .data(data.map((d, i) => {
+            return {...d, index: i}
+        }))
         .join("circle")
         .attr("cx", d => xScale(d.x))
         .attr("cy", d => yScale(d.y))
         .attr("r", 5)
         .attr("fill", "#000000")
         .attr("opacity", 0)
+        .attr("id", (d,i) => "point" + String(i))
         .on("mouseover", function (event, d) {
             toolTipCallback(d.word)
             svg.select(".Tooltip-text")
                 .attr("transform", `translate(${xScale(d.x) + 10}, ${yScale(d.y) - 10})`) 
                 .style("display", "block")
                 .text(d.word)
+                .style("fill", "white")
             d3.select(this)
                 .attr("stroke", "#333333")
                 .attr("stroke-width", 2);
+            d3.select("#rect" + String(d.index))
+                .transition()
+                .duration(100)
+                .attr("fill", hoverColor);
         })
         .on("mouseout", function (event, d) {
             svg.select(".Tooltip-text").style("display", "none");
             d3.select(this).attr("stroke", "none");
+            d3.select("#rect" + String(d.index))
+                .transition()
+                .duration(300)
+                .attr("fill", normalColor);
         });
 
     points.transition()

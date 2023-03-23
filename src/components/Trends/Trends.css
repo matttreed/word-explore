@@ -1,0 +1,23 @@
+.Trends-Main-container {
+    display:flex;
+    margin-bottom: 40px;
+}
+
+.Trends-svg {
+    width: 80vw;
+    height: 40vw;
+    border-radius: 10px;
+    fill: #A084DC;
+}
+
+.Trends-Tooltip-text {
+    font-family: "SG-Bold";
+    fill: white;
+    font-size: 60px;
+    /* position: absolute; */
+}
+
+.Trends-Clickable {
+    width: 80vw;
+    height: 40vw;
+}

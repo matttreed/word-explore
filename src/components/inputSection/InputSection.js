@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import drawSVG from '../../d3/drawTrajectory';
+import drawTrend from '../../d3/drawTrend';
 import './InputSection.css';
+import * as d3 from "d3";
+import drawSupPoints from '../../d3/drawSupPoint';
+import cursor from "../../images/cursor.png";
+import search from "../../images/search.webp";
+import selectPoint from '../../d3/selectPoint';
 
 function InputSection(props) {
   const {
@@ -11,37 +17,54 @@ function InputSection(props) {
     data, 
     setData, 
     setTooltipText, 
+    setTrendTooltipText,
     onClickSVG, 
     reRenderSVG,
     trendInput,
     setTrendInput,
     trendWords,
-    setTrendWords
+    setTrendWords,
+    useCosine,
+    setUseCosine,
+    selectingPoint,
+    setSelectingPoint
   } = props;
 
-  const setVectors = () => {
-    const v = [];
-    poem.toLowerCase()
-      .replace( /\n/g, " " )
-      .split(" ")
-      .filter(s => s.length > 0)
-      .forEach(word => {
-        const vec = VectorHandler.getVecForWord(word)
-        v.push({
-          word,
-          x: vec[0],
-          y: vec[1]
-        })
-      })
-    setData(v);
-    // drawSVG("Trajectory-svg", data, setTooltipText, onClickSVG);
-    drawSVG("Trajectory-svg", v, setTooltipText)
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [numTrendWords, setNumTrendWords] = useState(0);
+
+  const handleCursorClick = () => {
+    if (trendWords.length >= 9) {
+      setErrorMessage("Sorry, you can only look at 9 trend words at a time.");
+      return;
+    }
+    setSelectingPoint(true);
+    // selectPoint()
   }
 
   const handleTrendWords = () => {
-    trendWords.push(trendInput);
+    const vec = VectorHandler.getVecForWord(trendInput)
+    if (!vec) {
+      setErrorMessage("Sorry, we could not find '" + trendInput + "' in our dictionary");
+      return;
+    }
+    if (trendInput.length == 0) {
+      return;
+    }
+    if (trendWords.length >= 9) {
+      setErrorMessage("Sorry, you can only look at 9 trend words at a time.");
+      return;
+    }
+    setErrorMessage("");
+    trendWords.push({
+      word: trendInput,
+      vector: vec
+    });
     setTrendWords(trendWords);
     setTrendInput("");
+    setNumTrendWords(trendWords.length)
+    drawSupPoints(trendWords, setTooltipText)
   }
 
   const getTrendWordBubbles = () => {
@@ -51,13 +74,20 @@ function InputSection(props) {
           className='Trend-word-button'
           key={i}
           onClick={() => {
-            console.log(trendWords)
             trendWords.splice(i, 1);
             setTrendWords(trendWords);
-            console.log(trendWords)
+            setNumTrendWords(trendWords.length)
+            drawSupPoints(trendWords, setTooltipText)
+          }}
+          // style={{backgroundColor: d3.schemeSet1[i % 9]}}
+          style={{
+            borderColor: d3.schemeSet1[i % 9],
+            borderWidth: 2,
+            color: "black",
+            backgroundColor: d3.schemePastel1[i % 9]
           }}
         >
-          {word}
+          {word.word}
         </ button>
       )
     })
@@ -80,39 +110,69 @@ function InputSection(props) {
           placeholder={"enter poem here"}
           value={input}
         ></textarea>
-        <button 
+        <div style={{height: "30px"}}/>
+        <div className='Comparisons-container'>
+          <h1>
+            Comparisons
+          </h1>
+          <p>
+            Want to see trends over the length of your prose? Use the following interface to add words.
+          </p>
+          <div className='Distance-container'>
+            <button 
+              className="Distance-button" 
+              style={!useCosine ? {} : {backgroundColor: "#BFACE2"}}
+              onClick={() => setUseCosine(false)}
+            >
+              Euclidean Distance
+            </button>
+            <button 
+              className="Distance-button" 
+              style={useCosine ? {} : {backgroundColor: "#BFACE2"}}
+              onClick={() => setUseCosine(true)}
+            >
+              Cosine Distance
+            </button>
+          </div>
+          {errorMessage && (<p style={{color: "red"}}>
+            {errorMessage}
+          </p>)}
+          <div className='Trend-container'>
+            <img 
+              src={cursor} 
+              className="Cursor-button" 
+              onClick={handleCursorClick}
+            />
+            <input
+              className='Trend-input' 
+              onChange={e => {
+                if (e.target.value.search(/^[a-zA-Z0-9]+$/) !== -1 || !e.target.value.length) {
+                  setTrendInput(e.target.value)
+                }
+              }} 
+              placeholder={"enter word here"}
+              value={trendInput}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === " ") {
+                  handleTrendWords()
+                }
+              }}
+            ></input>
+          {/* <button 
+            className='Trend-button'
+            onClick={handleTrendWords}
+          > */}
+            {/* Use */}
+          {/* </button> */}
+            {getTrendWordBubbles()}
+        </div>
+        </div>
+        {/* <button 
           className='Save-button'
           onClick={setVectors}
         >
           Visualize
-        </button>
-        <div style={{height: "30px"}}/>
-        <h1>
-          Comparisons
-        </h1>
-        <p>
-          Want to see trends over the length of your prose? Use the following interface to add words.
-        </p>
-        <div className='Trend-container'>
-          <input
-            className='Trend-input' 
-            onChange={e => setTrendInput(e.target.value)} 
-            placeholder={"enter poem here"}
-            value={trendInput}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                handleTrendWords()
-              }
-            }}
-          ></input>
-        {/* <button 
-          className='Trend-button'
-          onClick={handleTrendWords}
-        > */}
-          {/* Use */}
-        {/* </button> */}
-          {getTrendWordBubbles()}
-        </div>
+        </button> */}
       </div>
     </div>
   );

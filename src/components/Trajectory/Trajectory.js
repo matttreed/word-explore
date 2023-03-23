@@ -9,54 +9,41 @@ const Trajectory = (props) => {
         data,
         tooltipText,
         setTooltipText,
-        onClickSVG
+        onClickSVG,
+        visualize,
+        selectingPoint,
+        clickToSelectPoint
     } = props
 
     const [rerender, setRerender] = useState(0);
 
-    useEffect(() => {
-        // setOnClick();
-    })
-
-    const setOnClick = () => {
-
-        const svg = d3.select(".Trajectory-svg");
-        let width = parseInt(svg.style("width"), 10)
-        let height = parseInt(svg.style("height"), 10)
-
-        const yScale = d3
-            .scaleLinear()
-            .domain([-30,30])
-            .range([height, 0])
-
-        const xScale = d3
-            .scaleLinear()
-            .domain([-30,30])
-            .range([0, width])
-
-        const rectangle = svg.select(".clickable")
-
-        console.log(rectangle)
-        
-        rectangle.on("click", (e, d) => {
-            const vec = [xScale.invert(e.offsetX), yScale.invert(e.offsetY)]
-            onClickSVG(vec);
-            console.log(vec)
-        })
-    }
 
     return (
         <div className='Main-container'>
+            <div className='Sub-container'>
             <svg className='Trajectory-svg'>
-                <rect className="Clickable" 
+                <rect className="Background" 
                     x="0" 
                     y="0" 
-                />
+                    />
+                {selectingPoint && <rect className="Clickable" 
+                    x="0" 
+                    y="0" 
+                    onClick={clickToSelectPoint}
+                    />}
                 <path className="Trajectory"/>
                 <g className='Points'/>
                 <g className="Sup-points" />
                 <text className="Tooltip-text">{tooltipText}</text>
             </svg>
+            {selectingPoint && <div className="Border-boy"/>}
+            {/* <button 
+          className='Save-button'
+          onClick={visualize}
+        >
+          Visualize
+        </button> */}
+        </div>
             {/* <p className="Tooltip-text">{tooltipText}</p> */}
         </div>
     )

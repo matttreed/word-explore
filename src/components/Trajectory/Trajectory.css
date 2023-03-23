@@ -1,12 +1,18 @@
 .Main-container {
-    display:flex;
+    display: flex
+}
+
+.Sub-container {
+    display: inline;
 }
 
 .Trajectory-svg {
-    width: 40vw;
-    height: 40vw;
+    width: 35vw;
+    height: 35vw;
     border-radius: 10px;
-    margin: 5vw;
+    margin-top: 65px;
+    margin-left: 5vw;
+    fill: var(--light);
 }
 
 .Tooltip-text {
@@ -15,12 +21,65 @@
     fill: white;
     font-size: 25px;
     display: none;
+    filter: drop-shadow(1px 1px 3px rgba(32, 29, 38, 0.3));
+}
+
+.Background {
+    /* fill: var(--light); */
+    height: 35vw;
+    width: 35vw;
 }
 
 .Clickable {
-    fill: var(--light);
-    height: 40vw;
-    width: 40vw;
+    /* fill: white; */
+    height: 35vw;
+    width: 35vw;
+    box-shadow:
+    0 0 60px 30px #fff,  /* inner white */
+    0 0 100px 60px #f0f, /* middle magenta */
+    0 0 140px 90px #0ff; /* outer cyan */
+}
+
+.Border-boy {
+    position: absolute;
+    opacity: .5;
+    top: 71px;
+    width: 35vw;
+    height: 35vw;
+    border-radius: 10px;
+    margin-top: 65px;
+    margin-left: 5vw;
+    box-shadow:
+    0 0 30px 15px #fff,  /* inner white */
+    0 0 50px 30px #f0f, /* middle magenta */
+    0 0 70px 45px #0ff; /* outer cyan */
+    pointer-events: none;
+}
+
+.Clickable:hover {
+    cursor: pointer;
+}
+
+.Save-button {
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 12.5vw;
+    margin-right: 7.5vw;
+    margin-top: 20px;
+    border-radius: 10px;
+    width: 20vw;
+    justify-content: center;
+    font-family: "SG-Regular";
+    background-color: var(--dark);
+    color: white;
+    font-size: 30px;
+    border-width: 0;
+    margin-bottom: 30px;
+}
+
+.Save-button:hover {
+    cursor: pointer;
 }
 
 /* .Trajectory {
