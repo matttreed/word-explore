@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/poem-visualizer/static/css/main.6928b0d1.css",
+    "main.js": "/poem-visualizer/static/js/main.140992d5.js",
+    "static/js/787.b370b494.chunk.js": "/poem-visualizer/static/js/787.b370b494.chunk.js",
+    "static/media/glove-wiki-gigaword-50-tsne-2.txt": "/poem-visualizer/static/media/glove-wiki-gigaword-50-tsne-2.f05d089aee06ea35b2f6.txt",
+    "static/media/SpaceGrotesk-Light.ttf": "/poem-visualizer/static/media/SpaceGrotesk-Light.5c62fc20689f43f24f44.ttf",
+    "static/media/SpaceGrotesk-Medium.ttf": "/poem-visualizer/static/media/SpaceGrotesk-Medium.dff8d806ce24db6ac483.ttf",
+    "static/media/SpaceGrotesk-Regular.ttf": "/poem-visualizer/static/media/SpaceGrotesk-Regular.67fa42510e26f5d4733d.ttf",
+    "static/media/SpaceGrotesk-SemiBold.ttf": "/poem-visualizer/static/media/SpaceGrotesk-SemiBold.b294a56ead28c272c9b1.ttf",
+    "static/media/SpaceGrotesk-Bold.ttf": "/poem-visualizer/static/media/SpaceGrotesk-Bold.96e001703fcc4898de0e.ttf",
+    "static/media/search.webp": "/poem-visualizer/static/media/search.334cb331c0cf89098ab1.webp",
+    "static/media/logo.svg": "/poem-visualizer/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/poem-visualizer/index.html",
+    "main.6928b0d1.css.map": "/poem-visualizer/static/css/main.6928b0d1.css.map",
+    "main.140992d5.js.map": "/poem-visualizer/static/js/main.140992d5.js.map",
+    "787.b370b494.chunk.js.map": "/poem-visualizer/static/js/787.b370b494.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6928b0d1.css",
+    "static/js/main.140992d5.js"
+  ]
+}
